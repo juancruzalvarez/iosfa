@@ -1,8 +1,19 @@
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 3001;
+import sql from "./db";
 
 app.get("/", (req, res) => res.type('html').send(html));
+
+app.get("/users", async (req, res) => {
+    const users = await sql`
+  select
+    email,
+    name,
+    grade
+  from users`;
+  res.send(JSON.stringify(users));
+})
 
 const server = app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
